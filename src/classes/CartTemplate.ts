@@ -30,7 +30,7 @@ export class CartTemplate implements Renderable<ICartProduct, Cart>{
         decQuantityBtn.setAttribute("data-id", element.id.toString());
         decQuantityBtn.setAttribute('data-action', CartItemActions.DECREASE.toString());
         decQuantityBtn.addEventListener('click', ()=>{
-            cart.removeProduct(element)
+            cart.decreaseProduct(element)
         });
 
         const qtyValue = document.createElement("span");
@@ -51,7 +51,9 @@ export class CartTemplate implements Renderable<ICartProduct, Cart>{
         removeItemBtn.innerText = "Remove";
         removeItemBtn.className = "btn-remove";
         removeItemBtn.setAttribute("data-id", element.id.toString());
-        removeItemBtn.addEventListener('click', ()=>{});
+        removeItemBtn.addEventListener('click', ()=>{
+            cart.removeProduct(element);
+        });
         
         const qtyControlsContainer = document.createElement("div");
         qtyControlsContainer.className = "qty-controls";
@@ -75,7 +77,7 @@ export class CartTemplate implements Renderable<ICartProduct, Cart>{
         const itemQtyVals = document.getElementsByClassName("qty-value") as HTMLCollectionOf<HTMLSpanElement>;
         for(const item of itemQtyVals){
             if(item.getAttribute("data-id")===element.id.toString()){
-                item.innerText = cart.totalProducts.toString();
+                item.innerText = element.quantity.toString();
             }
         }
     }   

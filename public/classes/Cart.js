@@ -24,7 +24,7 @@ export class Cart {
             this.cartTemp.render(cartProduct, Cart.cartInstance);
         }
     }
-    removeProduct(product) {
+    decreaseProduct(product) {
         var _a;
         const idx = (_a = this.products) === null || _a === void 0 ? void 0 : _a.findIndex((p) => p.id === product.id);
         this.products[idx].quantity -= 1;
@@ -36,6 +36,17 @@ export class Cart {
         }
         ;
         this.cartTemp.update(this.products[idx], Cart.cartInstance);
+    }
+    removeProduct(product) {
+        var _a;
+        const idx = (_a = this.products) === null || _a === void 0 ? void 0 : _a.findIndex((p) => p.id === product.id);
+        if (idx >= 0) {
+            const cartProduct = this.products[idx];
+            this.totalPrice -= (cartProduct.price * cartProduct.quantity);
+            this.totalProducts -= cartProduct.quantity;
+            this.cartTemp.remove(this.products[idx], Cart.cartInstance);
+            this.products.splice(idx, 1);
+        }
     }
     clearCart() {
         this.products = [];

@@ -23,7 +23,7 @@ export class CartTemplate {
         decQuantityBtn.setAttribute("data-id", element.id.toString());
         decQuantityBtn.setAttribute('data-action', CartItemActions.DECREASE.toString());
         decQuantityBtn.addEventListener('click', () => {
-            cart.removeProduct(element);
+            cart.decreaseProduct(element);
         });
         const qtyValue = document.createElement("span");
         qtyValue.innerText = element.quantity.toString();
@@ -41,7 +41,9 @@ export class CartTemplate {
         removeItemBtn.innerText = "Remove";
         removeItemBtn.className = "btn-remove";
         removeItemBtn.setAttribute("data-id", element.id.toString());
-        removeItemBtn.addEventListener('click', () => { });
+        removeItemBtn.addEventListener('click', () => {
+            cart.removeProduct(element);
+        });
         const qtyControlsContainer = document.createElement("div");
         qtyControlsContainer.className = "qty-controls";
         qtyControlsContainer.append(decQuantityBtn, qtyValue, incQuantityBtn);
@@ -60,7 +62,7 @@ export class CartTemplate {
         const itemQtyVals = document.getElementsByClassName("qty-value");
         for (const item of itemQtyVals) {
             if (item.getAttribute("data-id") === element.id.toString()) {
-                item.innerText = cart.totalProducts.toString();
+                item.innerText = element.quantity.toString();
             }
         }
     }
