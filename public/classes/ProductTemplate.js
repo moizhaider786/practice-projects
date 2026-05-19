@@ -1,6 +1,8 @@
+import { Cart } from "./Cart.js";
 export class ProductTemplate {
     constructor(container) {
         this.container = container;
+        this.cart = new Cart();
     }
     render(product) {
         const name = document.createElement("h3");
@@ -17,6 +19,7 @@ export class ProductTemplate {
         cartButton.setAttribute('data-id', product.id.toString());
         cartButton.innerText = 'Add to Cart';
         cartButton.addEventListener('click', () => {
+            this.cart.addProduct(product);
         });
         const metaContainer = document.createElement("div");
         metaContainer.className = "product-meta";

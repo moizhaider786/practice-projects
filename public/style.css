@@ -398,7 +398,7 @@ body {
 
 .cart-item-controls {
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   gap: 0.35rem;
 }

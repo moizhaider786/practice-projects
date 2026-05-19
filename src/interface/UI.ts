@@ -1,3 +1,3 @@
-export interface Renderable <T>{
-    render(element: T): void;
+export interface Renderable <T, U=undefined>{
+    render(element: T, data?: U ): void;
 }

@@ -1,7 +1,9 @@
-import { Product } from "./Product";
-import { Renderable } from "../interface/UI";
+import { Product } from "./Product.js";
+import { Renderable } from "../interface/UI.js";
+import { Cart } from "./Cart.js";
 
 export class ProductTemplate implements Renderable<Product>{
+    private cart = new Cart();
     constructor(private container: HTMLDivElement){}
 
     render(product: Product){
@@ -23,7 +25,7 @@ export class ProductTemplate implements Renderable<Product>{
         cartButton.innerText = 'Add to Cart';
 
         cartButton.addEventListener('click', ()=>{
-            
+            this.cart.addProduct(product);
         })
         
         const metaContainer = document.createElement("div")

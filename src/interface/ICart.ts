@@ -1,5 +1,5 @@
-import { Product } from "../classes/Product"
+import { Product } from "../classes/Product.js"
 
-interface ICartProduct extends Product {
+export interface ICartProduct extends Product {
     quantity: number
 }
