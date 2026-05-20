@@ -7,6 +7,10 @@ export class CartTemplate implements Renderable<ICartProduct, Cart>{
 
     constructor(private container: HTMLElement){}
     render(element: ICartProduct, cart: Cart) {
+        if(cart.totalProducts===1) {
+            const emptyTextContainer = document.getElementById("cartEmpty") as HTMLDivElement;
+            emptyTextContainer.style.display = "none"
+        }
         // Cart Nav
         const cartNavQty = document.getElementById("cartCount") as HTMLSpanElement;
         cartNavQty.innerText = cart.totalProducts.toString();
@@ -68,11 +72,22 @@ export class CartTemplate implements Renderable<ICartProduct, Cart>{
         cartItem.setAttribute("data-id", element.id.toString())
         cartItem.append(cartItemDetailsContainer, controlsContainer);
 
+        const subTotal = document.getElementById("subtotal") as HTMLSpanElement;
+        subTotal.innerText = cart.totalPrice.toFixed(2).toString();
+
+        const total = document.getElementById("total") as HTMLSpanElement;
+        total.innerText = cart.totalPrice.toFixed(2).toString();
         this.container.append(cartItem)
     }
     update(element: ICartProduct, cart: Cart) {
         const cartNavQty = document.getElementById("cartCount") as HTMLSpanElement;
         cartNavQty.innerText = cart.totalProducts.toString();
+
+        const subTotal = document.getElementById("subtotal") as HTMLSpanElement;
+        subTotal.innerText = cart.totalPrice.toFixed(2).toString();
+
+        const total = document.getElementById("total") as HTMLSpanElement;
+        total.innerText = cart.totalPrice.toFixed(2).toString();
 
         const itemQtyVals = document.getElementsByClassName("qty-value") as HTMLCollectionOf<HTMLSpanElement>;
         for(const item of itemQtyVals){
@@ -80,11 +95,21 @@ export class CartTemplate implements Renderable<ICartProduct, Cart>{
                 item.innerText = element.quantity.toString();
             }
         }
+        if(cart.totalProducts===0) {
+            const emptyTextContainer = document.getElementById("cartEmpty") as HTMLDivElement;
+            emptyTextContainer.style.display = "block"
+        }
     }   
 
     remove(element: ICartProduct, cart: Cart) {
         const cartNavQty = document.getElementById("cartCount") as HTMLSpanElement;
         cartNavQty.innerText = cart.totalProducts.toString();
+
+        const subTotal = document.getElementById("subtotal") as HTMLSpanElement;
+        subTotal.innerText = cart.totalPrice.toFixed(2).toString();
+
+        const total = document.getElementById("total") as HTMLSpanElement;
+        total.innerText = cart.totalPrice.toFixed(2).toString();
 
         const cartItems = document.getElementsByClassName("cart-item") as HTMLCollectionOf<HTMLDivElement>;
         for(const item of cartItems){
@@ -92,5 +117,26 @@ export class CartTemplate implements Renderable<ICartProduct, Cart>{
                 this.container.removeChild(item);
             }
         }
+        if(cart.totalProducts===0) {
+            const emptyTextContainer = document.getElementById("cartEmpty") as HTMLDivElement;
+            emptyTextContainer.style.display = "block"
+        }
     }   
+
+    clearCart(){
+        document.querySelectorAll(".cart-item").forEach((item)=>item.remove())
+        let priceAndProds = 0;
+        const subTotal = document.getElementById("subtotal") as HTMLSpanElement;
+        subTotal.innerText = priceAndProds.toFixed(2).toString();
+
+        const total = document.getElementById("total") as HTMLSpanElement;
+        total.innerText = priceAndProds.toFixed(2).toString();
+
+        const emptyTextContainer = document.getElementById("cartEmpty") as HTMLDivElement;
+        emptyTextContainer.style.display = "block"
+
+        const cartNavQty = document.getElementById("cartCount") as HTMLSpanElement;
+        cartNavQty.innerText = priceAndProds.toString();
+
+    }
 }

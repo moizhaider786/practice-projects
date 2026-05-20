@@ -1,5 +1,7 @@
 import { products } from "./data/products.js";
 import { ProductTemplate } from "./classes/ProductTemplate.js";
+import { Cart } from "./classes/Cart.js";
+const cart = new Cart();
 // Products Logic
 const shopSection = document.querySelector('.shop-section');
 const productsContainer = document.createElement('div');
@@ -22,4 +24,12 @@ cartCloseBtn.addEventListener('click', (event) => {
     cartSidebar.classList.remove("open");
     cartOverlay.classList.remove('active');
 });
-// Core Cart Logic
+// Cart Logic
+const cartClearBtn = document.getElementById("clearCartBtn");
+cartClearBtn.addEventListener('click', () => {
+    cart.clearCart();
+});
+const cartCheckoutBtn = document.getElementById("checkoutBtn");
+cartCheckoutBtn.addEventListener('click', () => {
+    cart.checkout();
+});

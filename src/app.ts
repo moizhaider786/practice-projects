@@ -2,6 +2,8 @@ import { products } from "./data/products.js";
 import { ProductTemplate } from "./classes/ProductTemplate.js";
 import { Cart } from "./classes/Cart.js";
 
+const cart = new Cart();
+
 // Products Logic
 const shopSection = document.querySelector('.shop-section') as HTMLElement;
 
@@ -33,4 +35,13 @@ cartCloseBtn.addEventListener('click', (event)=>{
     cartOverlay.classList.remove('active')
 })
 
-// Core Cart Logic
+// Cart Logic
+const cartClearBtn = document.getElementById("clearCartBtn") as HTMLButtonElement;
+cartClearBtn.addEventListener('click', ()=>{
+    cart.clearCart()
+})
+
+const cartCheckoutBtn = document.getElementById("checkoutBtn") as HTMLButtonElement;
+cartCheckoutBtn.addEventListener('click', ()=>{
+    cart.checkout()
+}) 

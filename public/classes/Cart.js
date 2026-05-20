@@ -52,10 +52,15 @@ export class Cart {
         this.products = [];
         this.totalPrice = 0;
         this.totalProducts = 0;
+        this.cartTemp.clearCart();
     }
     checkout() {
         if (this.products.length < 0)
             alert("No Products found to checkout");
-        alert("Order placed Successfully");
+        window.alert("Order placed Successfully");
+        this.products = [];
+        this.totalPrice = 0;
+        this.totalProducts = 0;
+        this.cartTemp.clearCart();
     }
 }
