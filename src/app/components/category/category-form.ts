@@ -7,7 +7,16 @@ import { CategoryService } from '../../services/category-service';
   imports: [FormsModule],
   template: `
       <label for="category"></label>
-      <input id="category" type="text" [(ngModel)]="category">
+      <input id="category" type="text" [(ngModel)]="category" required minlength="3" #categoryVar="ngModel">
+      @if(categoryVar.invalid && (categoryVar.dirty || categoryVar.touched)){
+        @if(categoryVar.hasError('required')){
+          <p>Category is Required</p>
+        }
+        @if(categoryVar.hasError('minlength')){
+          <p>Minimum 3 length required</p>
+        }
+      }
+
       <button (click)="categoryService.addCategory(category)">Add</button>
   `,
   styles: ``,

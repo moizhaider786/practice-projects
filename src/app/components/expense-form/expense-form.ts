@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule, FormSubmittedEvent } from '@angular/forms';
+import { Component, inject, model } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category-service';
+import { ExpenseService } from '../../services/expense-service';
+import { numberRangeValidator } from '../../validators';
 @Component({
   selector: 'app-expense-form',
   imports: [ReactiveFormsModule],
@@ -9,17 +11,40 @@ import { CategoryService } from '../../services/category-service';
 })
 export class ExpenseForm {
   categoryService = inject(CategoryService)
+  expenseService = inject(ExpenseService)
+  isFormOpen = model<boolean>()
   expenseForm = new FormGroup({
     description: new FormControl(''),
-    amount: new FormControl<number>(0),
-    category: new FormControl(''),
-    date: new FormControl(new Date())
+    amount: new FormControl<number|null>(null, [
+      Validators.required,
+      numberRangeValidator(0),
+    ]),
+    category: new FormControl('', [
+      Validators.required
+    ]),
+    date: new FormControl(new Date(), [
+      Validators.required
+    ])
   })
+
   onSubmit(e: SubmitEvent){
     e.preventDefault();
-    console.log(this.expenseForm.value.description)
-    console.log(this.expenseForm.value.amount)
-    console.log(this.expenseForm.value.category)
-    console.log(this.expenseForm.value.date)
+    if(this.expenseForm.invalid) window.alert("Invalid Form")
+    this.expenseService.addExpense({
+      description: this.expenseForm.value.description!,
+      amount: this.expenseForm.value.amount!,
+      category: this.expenseForm.value.category!,
+      date: this.expenseForm.value.date!
+    })
+  }
+
+  get amount(){
+    return this.expenseForm.controls.amount;
+  }
+  get category(){
+    return this.expenseForm.controls.category;
+  }
+  get date(){
+    return this.expenseForm.controls.date;
   }
 }

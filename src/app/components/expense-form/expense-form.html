@@ -1,18 +1,29 @@
+<button (click)="isFormOpen.set(false)">Close</button>
 <form [formGroup]="expenseForm" (ngSubmit)="onSubmit($event)">
     <label for="description" >Description</label>
     <input id = "description" type="text" formControlName="description">
 
     <label for="amount">Amount</label>
-    <input id="amount" type="text" formControlName="amount" >
-
+    <input id="amount" type="number" formControlName="amount" >
+    @if(amount.invalid && (amount.dirty || amount.touched)){
+        @if(amount.hasError('required')) {<p>Amount is required</p>}
+        @if(amount.hasError('numberRange') ){<p>Ivalid amount should be greater than 0</p>}
+    }
+    
     <label for="category">Category</label>
     <select name="category" id="category" formControlName="category">
         @for(category of categoryService.categories(); track $index){
             <option [value]="category">{{category}}</option>
         }
     </select>
+    @if(category.invalid && (category.dirty || category.touched)){
+        @if(category.hasError('required')) {<p>Category is required</p>}
+    }
+
     <label for="date">Date</label>
     <input id = "id" type="date" formControlName="date">
-
+    @if(category.invalid && (category.dirty || category.touched)){
+        @if(category.hasError('required')) {<p>Category is required</p>}
+    }
     <button type="submit">Add</button>
 </form>

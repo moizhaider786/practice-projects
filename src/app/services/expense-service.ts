@@ -17,7 +17,7 @@ export class ExpenseService {
 
   addExpense(expense: Omit<Expense, 'id'>){
     this._expenses.update(exp=>[...exp, {id: this._expenses().length, ...expense}]);
-    localStorage.setItem('expenses', JSON.stringify(this._expenses));
+    localStorage.setItem('expenses', JSON.stringify(this._expenses()));
   }
   updateExpense(expense: Expense){
     this._expenses.update((exp)=>{
@@ -26,7 +26,7 @@ export class ExpenseService {
       arr[idx] = expense;
       return arr;
     });
-    localStorage.setItem('expenses', JSON.stringify(this._expenses));
+    localStorage.setItem('expenses', JSON.stringify(this._expenses()));
   }
   removeExpense(expense: Expense){
     this._expenses.update((exp)=>{
@@ -35,6 +35,6 @@ export class ExpenseService {
       arr.splice(idx, 1);
       return arr;
     });
-    localStorage.setItem('expenses', JSON.stringify(this._expenses));
+    localStorage.setItem('expenses', JSON.stringify(this._expenses()));
   }
 }
