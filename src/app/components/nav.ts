@@ -11,10 +11,7 @@ import { RouterLink } from '@angular/router';
         <a routerLink="">Home</a>
       </li>
       <li>
-        <a routerLink="create-expense">Create</a>
-      </li>
-      <li>
-        <a routerLink="update-expense">Update</a>
+        <a routerLink="categories">Categories</a>
       </li>
     </ul>
   </nav>`,

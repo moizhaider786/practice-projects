@@ -1,0 +1,18 @@
+<form [formGroup]="expenseForm" (ngSubmit)="onSubmit($event)">
+    <label for="description" >Description</label>
+    <input id = "description" type="text" formControlName="description">
+
+    <label for="amount">Amount</label>
+    <input id="amount" type="text" formControlName="amount" >
+
+    <label for="category">Category</label>
+    <select name="category" id="category" formControlName="category">
+        @for(category of categoryService.categories(); track $index){
+            <option [value]="category">{{category}}</option>
+        }
+    </select>
+    <label for="date">Date</label>
+    <input id = "id" type="date" formControlName="date">
+
+    <button type="submit">Add</button>
+</form>
