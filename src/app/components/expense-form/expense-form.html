@@ -21,9 +21,9 @@
     }
 
     <label for="date">Date</label>
-    <input id = "id" type="date" formControlName="date">
-    @if(category.invalid && (category.dirty || category.touched)){
-        @if(category.hasError('required')) {<p>Category is required</p>}
+    <input id="date" type="date" formControlName="date">
+    @if(date.invalid && (date.dirty || date.touched)){
+        @if(date.hasError('required')) {<p>Date is required</p>}
     }
-    <button type="submit">Add</button>
+    <button type="submit">{{ formType() === formTypes.UPDATE ? 'Update' : 'Add' }}</button>
 </form>

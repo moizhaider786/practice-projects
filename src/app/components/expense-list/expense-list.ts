@@ -13,6 +13,7 @@ import { Expense } from '../../types';
           <p>{{exp.description}}</p>
           <p>{{exp.amount}}</p>
           <button data-id={{exp.id}} (click)="editExpense.emit(exp)">Edit</button>
+          <button (click)="removeExpense.emit(exp)">Delete</button>
         </li>
       }
     </div>
@@ -21,5 +22,6 @@ import { Expense } from '../../types';
 })
 export class ExpenseList {
   editExpense=output<Expense>()
+  removeExpense = output<Expense>();
   expenseService = inject(ExpenseService);
 }
