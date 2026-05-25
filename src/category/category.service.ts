@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -11,6 +11,7 @@ export class CategoryService {
   constructor(
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
+    private readonly dataSource: DataSource
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
@@ -33,5 +34,16 @@ export class CategoryService {
     return await this.categoryRepository.update(id, {
       name,
     });
+  }
+  async getChildCategories(parentId: number){
+    return await this.dataSource.query(`
+      WITH RECURSIVE category_path AS (
+        SELECT id, name, parentId FROM category WHERE id = ?
+        UNION ALL
+        SELECT c.id, c.name, c.parentId FROM category c
+        JOIN category_path cp ON cp.id = c.parentId
+      )
+      SELECT * FROM category_path;
+      `,[parentId]);
   }
 }

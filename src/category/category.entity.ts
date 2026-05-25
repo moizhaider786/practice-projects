@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Relation, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Product } from "src/products/product.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
 @Entity()
 export class Category {
     @PrimaryGeneratedColumn()
@@ -15,7 +16,10 @@ export class Category {
     parent!: Category | null;
 
     @OneToMany(()=> Category, (category)=>category.parent)
-    children!: Category[] |null;    
+    children!: Category[] |null;   
+    
+    @OneToMany(() => Product, (product) => product.category)
+    products!: Product[];
 
     @CreateDateColumn()
     createdAt!: Date;

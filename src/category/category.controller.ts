@@ -41,4 +41,9 @@ export class CategoryController {
             data: category
         }
     }
+
+    @Get(":id/children")
+    async getChildren(@Param("id") id:number){
+       return await this.categoryService.getChildCategories(id)
+    }
 }
