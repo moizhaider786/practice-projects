@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CategoryModule } from './category/category.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { Category } from './category/category.entity';
 @Module({
   imports: [CategoryModule,
     TypeOrmModule.forRoot({
@@ -12,8 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       port: 3306,
       username: 'root',
       password: 'mysql',
-      database: 'nestjs-testprj',
-      entities: [],
+      database: 'nest-practiceprj',
+      entities: [Category],
       synchronize: true, //PROD-WARNING: Only for development, disable in production
     }),
   ],
