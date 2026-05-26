@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ProductService } from '../../../core/services/product.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { Product, CreateProductDto } from '../../../core/models/product.model';
@@ -15,8 +15,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './products-page.component.css'
 })
 export class ProductsPageComponent implements OnInit {
-  products: Product[] = [];
-  categories: Category[] = [];
+  products = signal<Product[]>([]);
+  categories = signal<Category[]>([]);
   showForm = false;
   editingProduct: Product | null = null;
 
@@ -33,7 +33,7 @@ export class ProductsPageComponent implements OnInit {
   loadProducts() {
     this.productService.getAll().subscribe({
       next: (res) => {
-        this.products = res.data || [];
+        this.products.set(res.data || []);
       },
       error: (err) => console.error(err)
     });
@@ -42,7 +42,7 @@ export class ProductsPageComponent implements OnInit {
   loadCategories() {
     this.categoryService.getAll().subscribe({
       next: (res) => {
-        this.categories = res.data || [];
+        this.categories.set(res.data || []);
       },
       error: (err) => console.error(err)
     });

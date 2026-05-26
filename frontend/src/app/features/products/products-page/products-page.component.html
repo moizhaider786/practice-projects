@@ -3,17 +3,19 @@
   <button *ngIf="!showForm" class="btn-primary" (click)="onAddNew()">Add New Product</button>
 </div>
 
-<app-product-form
-  *ngIf="showForm"
-  [categories]="categories"
-  [editingProduct]="editingProduct"
-  (save)="onSave($event)"
-  (cancel)="onCancel()">
-</app-product-form>
+@if(showForm){
+  <app-product-form
+    [categories]="categories()"
+    [editingProduct]="editingProduct"
+    (save)="onSave($event)"
+    (cancel)="onCancel()">
+  </app-product-form>
+}
+@if(!showForm){
+  <app-product-list
+    [products]="products()"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+  </app-product-list>
+}
 
-<app-product-list
-  *ngIf="!showForm"
-  [products]="products"
-  (edit)="onEdit($event)"
-  (delete)="onDelete($event)">
-</app-product-list>

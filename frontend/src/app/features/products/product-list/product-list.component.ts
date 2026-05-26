@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Product } from '../../../core/models/product.model';
 import { CommonModule } from '@angular/common';
 
@@ -10,9 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent {
-  @Input() products: Product[] = [];
-  @Output() edit = new EventEmitter<Product>();
-  @Output() delete = new EventEmitter<number>();
+  products = input<Product[]>([]);
+  edit = output<Product>();
+  delete = output<number>();
 
   onEdit(product: Product) {
     this.edit.emit(product);

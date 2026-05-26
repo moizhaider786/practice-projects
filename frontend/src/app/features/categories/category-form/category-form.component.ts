@@ -1,20 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnChanges, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Category, CreateCategoryDto } from '../../../core/models/category.model';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-category-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ ReactiveFormsModule],
   templateUrl: './category-form.component.html',
   styleUrl: './category-form.component.css'
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
-  @Input() categories: Category[] = [];
-  @Input() editingCategory: Category | null = null;
-  @Output() save = new EventEmitter<{id?: number, data: CreateCategoryDto}>();
-  @Output() cancel = new EventEmitter<void>();
+  categories = input<Category[]>([]);
+  editingCategory = input<Category | null>(null);
+  save = output<{id?: number, data: CreateCategoryDto}>();
+  cancel = output<void>();
 
   categoryForm!: FormGroup;
 
@@ -32,8 +31,8 @@ export class CategoryFormComponent implements OnInit, OnChanges {
 
   initForm() {
     this.categoryForm = this.fb.group({
-      name: [this.editingCategory?.name || '', Validators.required],
-      parentId: [this.editingCategory?.parentId || '']
+      name: [this.editingCategory()?.name || '', Validators.required],
+      parentId: [this.editingCategory()?.parentId || '']
     });
   }
 
@@ -46,7 +45,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
       };
       
       this.save.emit({
-        id: this.editingCategory?.id,
+        id: this.editingCategory()?.id,
         data
       });
     }
