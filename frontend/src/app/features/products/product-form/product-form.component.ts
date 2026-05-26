@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, OnChanges, input, output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Product, CreateProductDto } from '../../../core/models/product.model';
 import { Category } from '../../../core/models/category.model';
@@ -11,7 +11,7 @@ import { AmountUnit } from '../../../core/models/types';
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css'
 })
-export class ProductFormComponent implements OnInit, OnChanges {
+export class ProductFormComponent {
   categories = input<Category[]>([]);
   editingProduct = input<Product | null>(null);
   save = output<{id?: number, data: CreateProductDto}>();
@@ -21,17 +21,10 @@ export class ProductFormComponent implements OnInit, OnChanges {
   units = Object.values(AmountUnit);
 
   constructor(private fb: FormBuilder) {
-    console.log("categories in form", this.categories());
-  }
-
-  ngOnInit() {
-    this.initForm();
-  }
-
-  ngOnChanges() {
-    if (this.productForm) {
+    effect(() => {
+      console.log("categories in form", this.categories());
       this.initForm();
-    }
+    });
   }
 
   initForm() {

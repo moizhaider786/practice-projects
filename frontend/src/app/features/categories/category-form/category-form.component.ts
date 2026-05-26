@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, OnChanges, input, output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Category, CreateCategoryDto } from '../../../core/models/category.model';
 
@@ -9,7 +9,7 @@ import { Category, CreateCategoryDto } from '../../../core/models/category.model
   templateUrl: './category-form.component.html',
   styleUrl: './category-form.component.css'
 })
-export class CategoryFormComponent implements OnInit, OnChanges {
+export class CategoryFormComponent {
   categories = input<Category[]>([]);
   editingCategory = input<Category | null>(null);
   save = output<{id?: number, data: CreateCategoryDto}>();
@@ -17,16 +17,10 @@ export class CategoryFormComponent implements OnInit, OnChanges {
 
   categoryForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit() {
-    this.initForm();
-  }
-
-  ngOnChanges() {
-    if (this.categoryForm) {
+  constructor(private fb: FormBuilder) {
+    effect(() => {
       this.initForm();
-    }
+    });
   }
 
   initForm() {
