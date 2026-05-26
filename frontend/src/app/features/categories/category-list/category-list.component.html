@@ -1,0 +1,28 @@
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Parent Category</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(category of categories(); track category.id) {
+      <tr>
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ getParentName(category.parentId) }}</td>
+        <td class="actions">
+          <button class="btn-secondary" (click)="onEdit(category)">Edit</button>
+        <button class="btn-danger" (click)="onDelete(category.id)">Delete</button>
+        </td>
+      </tr>
+    }
+    @if(categories.length === 0) {
+       <tr>
+         <td colspan="4" class="text-center">No categories found.</td>
+       </tr>
+    }
+  </tbody>
+</table>

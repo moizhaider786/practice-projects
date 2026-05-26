@@ -1,0 +1,12 @@
+export interface Category {
+  id: number;
+  name: string;
+  parentId: number | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CreateCategoryDto {
+  name: string;
+  parentId?: number;
+}

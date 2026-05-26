@@ -1,0 +1,30 @@
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Name</th>
+      <th>Category ID</th>
+      <th>Price</th>
+      <th>Cost</th>
+      <th>Unit</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.sku }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.categoryId }}</td>
+      <td>{{ product.sellingPrice | currency }}</td>
+      <td>{{ product.costPrice | currency }}</td>
+      <td>{{ product.unit }}</td>
+      <td class="actions">
+        <button class="btn-secondary" (click)="onEdit(product)">Edit</button>
+        <button class="btn-danger" (click)="onDelete(product.id)">Delete</button>
+      </td>
+    </tr>
+    <tr *ngIf="products.length === 0">
+      <td colspan="7" class="text-center">No products found.</td>
+    </tr>
+  </tbody>
+</table>

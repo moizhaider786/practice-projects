@@ -1,0 +1,68 @@
+<div class="form-card">
+  <h3>{{ editingProduct ? 'Edit' : 'Create' }} Product</h3>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label for="sku">SKU *</label>
+        <input type="text" id="sku" formControlName="sku" />
+      </div>
+      <div class="form-group">
+        <label for="name">Name *</label>
+        <input type="text" id="name" formControlName="name" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="categoryId">Category *</label>
+        <select id="categoryId" formControlName="categoryId">
+          <option value="">-- Select Category --</option>
+          <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="unit">Unit *</label>
+        <select id="unit" formControlName="unit">
+          <option value="">-- Select Unit --</option>
+          <option *ngFor="let u of units" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="costPrice">Cost Price *</label>
+        <input type="number" id="costPrice" formControlName="costPrice" step="0.01" />
+      </div>
+      <div class="form-group">
+        <label for="sellingPrice">Selling Price *</label>
+        <input type="number" id="sellingPrice" formControlName="sellingPrice" step="0.01" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="reorderLevel">Reorder Level</label>
+        <input type="number" id="reorderLevel" formControlName="reorderLevel" />
+      </div>
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" formControlName="isActive" />
+          Active
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" rows="3"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="productForm.invalid">Save</button>
+      <button type="button" class="btn-secondary" (click)="cancel.emit()">Cancel</button>
+    </div>
+    
+  </form>
+</div>

@@ -1,0 +1,20 @@
+<div class="page-header">
+  <h2>Categories</h2>
+  <button *ngIf="!showForm" class="btn-primary" (click)="onAddNew()">Add New Category</button>
+</div>
+@if(showForm){
+  <app-category-form
+    [categories]="categories()"
+    [editingCategory]="editingCategory"
+    (save)="onSave($event)"
+    (cancel)="onCancel()">
+  </app-category-form>
+}
+
+@if(!showForm) {
+  <app-category-list
+    [categories]="categories()"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)">
+  </app-category-list>
+}

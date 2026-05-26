@@ -1,0 +1,30 @@
+<div class="form-card">
+  <h3>{{ editingCategory ? 'Edit' : 'Create' }} Category</h3>
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="name">Name *</label>
+      <input type="text" id="name" formControlName="name" placeholder="Category name" />
+      <div *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched" class="error">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="parentId">Parent Category</label>
+      <select id="parentId" formControlName="parentId">
+        <option value="">-- No Parent --</option>
+        <ng-container *ngFor="let cat of categories">
+          <!-- Prevent selecting itself as parent -->
+          <option *ngIf="cat.id !== editingCategory?.id" [value]="cat.id">{{ cat.name }}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="categoryForm.invalid">Save</button>
+      <button type="button" class="btn-secondary" (click)="cancel.emit()">Cancel</button>
+    </div>
+    
+  </form>
+</div>
