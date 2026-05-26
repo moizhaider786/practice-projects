@@ -1,0 +1,26 @@
+import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { StockMovement } from './stock-movement.entity';
+import { StockInDto } from './dto/stock-in.dto';
+import { StockMovementType } from 'src/types';
+@Injectable()
+export class StockMovementsService {
+    constructor(
+        @InjectRepository(StockMovement)
+        private readonly stockMovementRepository: Repository<StockMovement>
+    ) {}
+
+    async stockIn(stockInDto: StockInDto){
+        const stockMovement = this.stockMovementRepository.create({
+            productId: stockInDto.productId,
+            quantity: stockInDto.quantity,
+            unitPrice: stockInDto.unitPrice,
+            reason: stockInDto.reason,
+            referenceNote: stockInDto.referenceNote,
+            type: StockMovementType.IN,
+        });
+        return await this.stockMovementRepository.save(stockMovement);
+    }
+
+}

@@ -6,6 +6,8 @@ import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './category/category.entity';
 import { Product } from './products/product.entity';
+import { StockMovement } from './stock-movements/stock-movement.entity';
+import { StockMovementsModule } from './stock-movements/stock-movements.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -15,11 +17,12 @@ import { Product } from './products/product.entity';
       username: 'root',
       password: 'mysql',
       database: 'nest-practiceprj',
-      entities: [Category, Product],
+      entities: [Category, Product, StockMovement],
       synchronize: true, //PROD-WARNING: Only for development, disable in production
     }),
     ProductsModule,
-    CategoryModule
+    CategoryModule,
+    StockMovementsModule
   ],
   controllers: [AppController],
   providers: [AppService],

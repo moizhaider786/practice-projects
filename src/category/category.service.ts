@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository, DataSource } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './category.entity';
@@ -35,6 +35,14 @@ export class CategoryService {
       name,
     });
   }
+
+  async validateCategory(id: number): Promise<boolean> {
+    const isFound = await this.categoryRepository.exists({
+      where: { id },
+    });
+    return isFound;
+  }
+
   async getChildCategories(parentId: number){
     return await this.dataSource.query(`
       WITH RECURSIVE category_path AS (

@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { AmountUnit as Unit } from 'src/types';
 import { Category } from 'src/category/category.entity';
+import { StockMovement } from 'src/stock-movements/stock-movement.entity';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
