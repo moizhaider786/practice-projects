@@ -1,4 +1,4 @@
-import { Product } from "src/products/product.entity";
+import { Product } from "../products/product.entity";
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
 @Entity()
 export class Category {

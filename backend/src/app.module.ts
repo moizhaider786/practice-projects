@@ -4,22 +4,15 @@ import { AppService } from './app.service';
 import { CategoryModule } from './category/category.module';
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Category } from './category/category.entity';
-import { Product } from './products/product.entity';
-import { StockMovement } from './stock-movements/stock-movement.entity';
 import { StockMovementsModule } from './stock-movements/stock-movements.module';
+import {dataSourceOptions} from './data-source';
+import {ConfigModule} from '@nestjs/config';
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'mysql',
-      database: 'nest-practiceprj',
-      entities: [Category, Product, StockMovement],
-      synchronize: true, //PROD-WARNING: Only for development, disable in production
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     ProductsModule,
     CategoryModule,
     StockMovementsModule

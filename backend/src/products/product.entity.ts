@@ -1,13 +1,12 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
-import { AmountUnit as Unit } from 'src/types';
-import { Category } from 'src/category/category.entity';
-import { StockMovement } from 'src/stock-movements/stock-movement.entity';
+import { AmountUnit as Unit } from '../types';
+import { Category } from '../category/category.entity';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ unique: true, length: 50, nullable: false })
+  @Column({ type: 'varchar', unique: true, length: 50, nullable: false })
   sku!: string;
 
   @Column({length: 150, nullable: false})
@@ -36,6 +35,9 @@ export class Product {
 
   @Column({default: true})
   isActive!: boolean
+  
+  @Column({default: 0})
+  currentStock!: number
 
   @CreateDateColumn()
   createdAt!: Date

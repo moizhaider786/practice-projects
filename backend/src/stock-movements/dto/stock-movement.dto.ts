@@ -1,5 +1,5 @@
 import { StockMovementReason } from "src/types";
-export class StockInDto {
+export class StockMovementDto {
     productId!: number;
     quantity!: number;
     unitPrice!: number;

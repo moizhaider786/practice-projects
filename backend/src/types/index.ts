@@ -9,14 +9,14 @@ export enum AmountUnit {
 }
 
 export enum StockMovementType {
-    IN = 'in',
-    OUT = 'out'
+    IN = 'IN',
+    OUT = 'OUT'
 }
 
 export enum StockMovementReason {
-    PURCHASE = 'purchase',
-    DAMAGED = 'damaged',
-    SALE = 'sale',
-    RETURN = 'return',
-    ADJUSTMENT = 'adjustment'
+    PURCHASE = 'PURCHASE',
+    DAMAGED = 'DAMAGED',
+    SALE = 'SALE',
+    RETURN = 'RETURN',
+    ADJUSTMENT = 'ADJUSTMENT'
 }
