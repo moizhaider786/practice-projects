@@ -20,3 +20,8 @@ export enum StockMovementReason {
     RETURN = 'RETURN',
     ADJUSTMENT = 'ADJUSTMENT'
 }
+
+export enum AlertType {
+    REORDER_LEVEL = 'REORDER_LEVEL',
+    STOCK_OUT = 'STOCK_OUT'
+}

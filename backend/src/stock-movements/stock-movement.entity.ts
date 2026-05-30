@@ -26,7 +26,7 @@ export class StockMovement{
     @Column()
     reason!: StockMovementReason;
 
-    @Column()
+    @Column({nullable: true})
     referenceNote?: string;
 
     @CreateDateColumn()

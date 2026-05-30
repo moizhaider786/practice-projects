@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StockMovementsModule } from './stock-movements/stock-movements.module';
 import {dataSourceOptions} from './data-source';
 import {ConfigModule} from '@nestjs/config';
+import { AlertLogsModule } from './alert-logs/alert-logs.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,7 +16,8 @@ import {ConfigModule} from '@nestjs/config';
     TypeOrmModule.forRoot(dataSourceOptions),
     ProductsModule,
     CategoryModule,
-    StockMovementsModule
+    StockMovementsModule,
+    AlertLogsModule
   ],
   controllers: [AppController],
   providers: [AppService],

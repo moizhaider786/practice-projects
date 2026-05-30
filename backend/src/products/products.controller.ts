@@ -63,10 +63,10 @@ export class ProductsController {
   @Put(':id')
   async update(
     @Param('id') id: number,
-    @Body() updateProductDto: CreateProductDto,
+    @Body() updateProductDto: Partial<CreateProductDto>,
   ) {
     if (
-      updateProductDto.categoryId &&
+    updateProductDto.categoryId &&
       !(await this.categoryService.validateCategory(
         updateProductDto.categoryId,
       ))
