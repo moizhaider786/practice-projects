@@ -13,6 +13,7 @@ export class ProductListComponent {
   products = input<Product[]>([]);
   edit = output<Product>();
   delete = output<number>();
+  openStockForm = output<Product>();
 
   onEdit(product: Product) {
     this.edit.emit(product);

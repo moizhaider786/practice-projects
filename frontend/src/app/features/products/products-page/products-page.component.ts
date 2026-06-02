@@ -5,24 +5,26 @@ import { Product, CreateProductDto } from '../../../core/models/product.model';
 import { Category } from '../../../core/models/category.model';
 import { ProductListComponent } from '../product-list/product-list.component';
 import { ProductFormComponent } from '../product-form/product-form.component';
+import { StockMovementFormComponent } from '../../stock-movements/stock-movement-form/stock-movement-form.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products-page',
-  standalone: true,
-  imports: [CommonModule, ProductListComponent, ProductFormComponent],
+  imports: [CommonModule, ProductListComponent, ProductFormComponent, StockMovementFormComponent],
   templateUrl: './products-page.component.html',
-  styleUrl: './products-page.component.css'
+  styleUrl: './products-page.component.css',
 })
 export class ProductsPageComponent implements OnInit {
   products = signal<Product[]>([]);
   categories = signal<Category[]>([]);
+  stockEditProduct = signal<Product | undefined>(undefined);
   showForm = false;
+  showStockForm = signal<boolean>(false);
   editingProduct: Product | null = null;
 
   constructor(
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class ProductsPageComponent implements OnInit {
       next: (res) => {
         this.products.set(res.data || []);
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
     });
   }
 
@@ -44,7 +46,7 @@ export class ProductsPageComponent implements OnInit {
       next: (res) => {
         this.categories.set(res.data || []);
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
     });
   }
 
@@ -61,18 +63,18 @@ export class ProductsPageComponent implements OnInit {
   onDelete(id: number) {
     this.productService.delete(id).subscribe({
       next: () => this.loadProducts(),
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
     });
   }
 
-  onSave(event: {id?: number, data: CreateProductDto}) {
+  onSave(event: { id?: number; data: CreateProductDto }) {
     if (event.id) {
       this.productService.update(event.id, event.data).subscribe({
         next: () => {
           this.showForm = false;
           this.loadProducts();
         },
-        error: (err) => console.error(err)
+        error: (err) => console.error(err),
       });
     } else {
       this.productService.create(event.data).subscribe({
@@ -80,7 +82,7 @@ export class ProductsPageComponent implements OnInit {
           this.showForm = false;
           this.loadProducts();
         },
-        error: (err) => console.error(err)
+        error: (err) => console.error(err),
       });
     }
   }
@@ -88,5 +90,14 @@ export class ProductsPageComponent implements OnInit {
   onCancel() {
     this.showForm = false;
     this.editingProduct = null;
+  }
+  openStockForm(product: Product){
+    if(!product) return window.alert("Product data is missing. Cannot open stock form.");
+    this.stockEditProduct.set(product);
+    this.showStockForm.set(true);
+  }
+  closeStockForm(){
+    this.showStockForm.set(false);
+    this.stockEditProduct.set(undefined);
   }
 }

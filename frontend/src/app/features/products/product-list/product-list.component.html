@@ -21,6 +21,7 @@
         <td>{{ product.unit }}</td>
         <td class="actions">
           <button class="btn-secondary" (click)="onEdit(product)">Edit</button>
+          <button class="btn-secondary" (click)="openStockForm.emit(product)">Edit Stock</button>
           <button class="btn-danger" (click)="onDelete(product.id)">Delete</button>
         </td>
       </tr>

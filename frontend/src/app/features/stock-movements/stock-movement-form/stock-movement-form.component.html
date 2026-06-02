@@ -1,0 +1,70 @@
+<form #forVar="ngForm" (ngSubmit)="onSubmit()">
+  <h1>Stock Movement</h1>
+  <h3>Product: {{ product()!.name }}</h3>
+  <label for="quantity">Quantity:</label>
+  <input
+    type="number"
+    id="quantity"
+    name="quantity"
+    [(ngModel)]="stockMovement.quantity"
+    #quantity="ngModel"
+    required
+    min="1"
+  />
+  @if (quantity.invalid && (quantity.touched || quantity.dirty)) {
+    @if (quantity.hasError('required')) {
+      <div>Quantity is required</div>
+    }
+    @if (quantity.hasError('min')) {
+      <div>Minimum value 1 is acceptable</div>
+    }
+  }
+  <label for="unitPrice">Unit Price:</label>
+  <input
+    type="number"
+    id="unitPrice"
+    name="unitPrice"
+    [(ngModel)]="stockMovement.unitPrice"
+    #unitPrice="ngModel"
+    required
+    min="1"
+  />
+  @if (unitPrice.invalid && (unitPrice.touched || unitPrice.dirty)) {
+    @if (unitPrice.hasError('required')) {
+      <div>Unit Price is required</div>
+    }
+    @if (unitPrice.hasError('min')) {
+      <div>Minimum value 1 is acceptable</div>
+    }
+  }
+  <label for="type">Type:</label>
+  <select id="type" name="type" [(ngModel)]="stockMovement.type" required #type="ngModel">
+    <option value="IN">Stock In</option>
+    <option value="OUT">Stock Out</option>
+  </select>
+  @if (type.invalid && (type.touched || type.dirty)) {
+    @if (type.hasError('required')) {
+      <div>Type is required</div>
+    }
+  }
+  <label for="reason">Reason:</label>
+  <select id="reason" name="reason" [(ngModel)]="stockMovement.reason" required #reason="ngModel">
+    @for (reason of stockMovementReasons; track $index) {
+      <option [value]="reason">{{ reason }}</option>
+    }
+  </select>
+  @if (reason.invalid && (reason.touched || reason.dirty)) {
+    @if (reason.hasError('required')) {
+      <div>Reason is required</div>
+    }
+  }
+  <label for="referenceNote">Reference Note: </label>
+  <input
+    type="text"
+    id="referenceNote"
+    name="referenceNote"
+    [(ngModel)]="stockMovement.referenceNote"
+  />
+  <button type="submit" [disabled]="!forVar.form.valid">Submit</button>
+</form>
+<button (click)="closeStockForm.emit()">Cancel</button>
